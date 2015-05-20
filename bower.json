@@ -1,0 +1,36 @@
+{
+    "name": "jskeleton-i18n",
+    "version": "0.0.1",
+    "description": "",
+    "main": "dist/index.html",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:bq/jskeletonI18n.git"
+    },
+    "ignore": [
+        "bower_components",
+        "node_modules",
+        ".tmp",
+        "*.log",
+        ".DS_Store",
+        ".idea",
+        ".gitignore",
+        ".travis.yml",
+        ".editorconfig"
+    ],
+    "dependencies": {
+        "i18next": "~1.9.0",
+        "jskeleton": "https://github.com/bq/jskeleton-corbel.git"
+    },
+    "authors": [
+        "front-end bq <front-end@bq.com>"
+    ],
+    "keywords": [
+        "Jskeleton",
+        "Plugin",
+        "marionette",
+        "extension",
+        "component",
+        "jskeleton"
+    ]
+}
