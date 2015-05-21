@@ -26,10 +26,9 @@
 
     'use strict';
 
-    //Set initial i18next configuration
+    //Set initial i18next configuration merged with the application i18n config settings
     var config = _.extend({
         getAsync: true,
-        lang: 'es-ES',
         cookieName: 'lang',
         load: 'current',
         escapeInterpolation: true,
@@ -43,19 +42,24 @@
 
         // i18n initialization
         initialize: function(lang) {
+            //Get the initial lang from local storage, application config or navigator lang
             this.lang = lang || this.getInitLang();
 
+            //Set the language into the local storage
             localStorage.setItem('lang', this.lang);
 
+            //Return a promise to resolve the extension async
             return new JSkeleton.Promise(function(resolve) {
 
+                //Initialize the i18n with the specified config
                 $.i18n.init(config, function() {
-                    resolve($.i18n);
+                    resolve(JSkeleton.i18n);
                 });
 
-                //Expose i18n as dependency
+
+                //Expose i18n object as dependency
                 JSkeleton.di.inject({
-                    i18n: $.i18n
+                    i18n: JSkeleton.i18n
                 });
 
             });
@@ -64,12 +68,16 @@
 
         // Gets detected language
         getInitLang: function() {
+            //try to get the lang from the local storage first
             var lang = localStorage.getItem('lang');
 
+
+            //get the language from the application settings
             if (!lang) {
                 lang = config.lang;
             }
 
+            //if no lang is sets, try to get it from the navigator object
             if (!lang) {
                 // Explorer || FF
                 lang = navigator.userLanguage || navigator.language;
@@ -103,10 +111,8 @@
 
     //Add i18next as JSkeleton.Extension
     JSkeleton.Extension.add('i18n', {
-        initialize: true,
-        waitBeforeStart: true,
         async: true,
-        resolver: JSkeleton.i18n.initialize,
+        promise: JSkeleton.i18n.initialize(),
         factory: false
     });
 
