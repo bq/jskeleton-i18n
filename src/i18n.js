@@ -19,7 +19,7 @@
         module.exports = factory(root, JSkeleton, i18Next, _, $);
 
     } else if (root !== undefined) {
-        factory.call(root, root, root.Jskeleton, root.i18next, root._, root.$);
+        factory.call(root, root, root.JSkeleton, root.i18next, root._, root.$);
     }
 
 })(this, function(root, JSkeleton, i18Next, _, $) {
