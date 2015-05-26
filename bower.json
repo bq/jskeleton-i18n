@@ -2,7 +2,7 @@
     "name": "jskeleton-i18n",
     "version": "0.0.1",
     "description": "",
-    "main": "dist/index.html",
+    "main": "src/i18n.js",
     "repository": {
         "type": "git",
         "url": "git@github.com:bq/jskeletonI18n.git"
