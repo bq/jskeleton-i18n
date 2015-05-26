@@ -51,11 +51,10 @@
             //Return a promise to resolve the extension async
             return new JSkeleton.Promise(function(resolve) {
 
-                //Initialize the i18n with the specified config
-                $.i18n.init(config, function() {
-                    resolve(JSkeleton.i18n);
-                });
+                resolve(JSkeleton.i18n);
 
+                //Initialize the i18n with the specified config
+                $.i18n.init(config, function() {});
 
                 //Expose i18n object as dependency
                 JSkeleton.di.inject({
@@ -110,10 +109,11 @@
     };
 
     //Add i18next as JSkeleton.Extension
-    JSkeleton.Extension.add('i18n', {
+    JSkeleton.extension.add('i18n', {
         async: true,
         promise: JSkeleton.i18n.initialize(),
-        factory: false
+        factory: false,
+        beforeStartHook: true
     });
 
 
