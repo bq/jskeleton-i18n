@@ -6,14 +6,14 @@
     /* jshint unused: false */
 
     if (typeof define === 'function' && define.amd) {
-        define(['jskeleton', 'i18next', '_', '$'], function(JSkeleton, i18Next, _, $) {
+        define(['jskeleton', 'i18next', 'underscore', 'jquery'], function(JSkeleton, i18Next, _, $) {
             return factory.call(root, root, JSkeleton, i18Next, _, $);
         });
     } else if (typeof module !== 'undefined' && module.exports) {
 
         var JSkeleton = require('jskeleton'),
-            _ = require('_'),
-            $ = require('$'),
+            _ = require('underscore'),
+            $ = require('jquery'),
             i18Next = require('i18next');
 
         module.exports = factory(root, JSkeleton, i18Next, _, $);
