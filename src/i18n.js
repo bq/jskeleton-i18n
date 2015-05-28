@@ -6,23 +6,22 @@
     /* jshint unused: false */
 
     if (typeof define === 'function' && define.amd) {
-        define(['jskeleton', 'i18next', 'underscore', 'jquery'], function(JSkeleton, i18Next, _, $) {
-            return factory.call(root, root, JSkeleton, i18Next, _, $);
+        define(['jskeleton', 'i18next', 'underscore', 'jquery'], function(JSkeleton, i18Next, _) {
+            return factory.call(root, root, JSkeleton, i18Next, _);
         });
     } else if (typeof module !== 'undefined' && module.exports) {
 
         var JSkeleton = require('jskeleton'),
             _ = require('underscore'),
-            $ = require('jquery'),
             i18Next = require('i18next');
 
-        module.exports = factory(root, JSkeleton, i18Next, _, $);
+        module.exports = factory(root, JSkeleton, i18Next, _);
 
     } else if (root !== undefined) {
-        factory.call(root, root, root.JSkeleton, root.i18next, root._, root.$);
+        factory.call(root, root, root.JSkeleton, root.i18next, root._);
     }
 
-})(this, function(root, JSkeleton, i18Next, _, $) {
+})(this, function(root, JSkeleton, i18next, _) {
 
     'use strict';
 
@@ -51,14 +50,19 @@
             //Return a promise to resolve the extension async
             return new JSkeleton.Promise(function(resolve) {
 
-                resolve(JSkeleton.i18n);
 
                 //Initialize the i18n with the specified config
-                $.i18n.init(config, function() {});
+                i18next.init(config, function() {
 
-                //Expose i18n object as dependency
-                JSkeleton.di.inject({
-                    i18n: JSkeleton.i18n
+                    resolve(JSkeleton.i18n);
+                    //Expose i18n object as dependency
+                    JSkeleton.di.inject({
+                        i18n: JSkeleton.i18n
+                    });
+
+                    // helper i18n
+                    JSkeleton.i18n.registerHelper();
+
                 });
 
             });
@@ -104,6 +108,32 @@
         //By default, it refresh the page
         changed: function() {
             window.location.reload();
+        },
+
+        // register helper
+        registerHelper: function() {
+            JSkeleton.registerHelper('i18n', function(params, env, args) {
+
+                /**
+                 * Helpers for i18next
+                 * @example
+                 * {{ i18n "key" }}
+                 * {{ i18n "key" "{ count: 1 }" }} => count is { count: 1 }
+                 * @param  {String} context
+                 * @param  {Object} options optional parameter to localization (like count, or context)
+                 * @return {String} Localized String
+                 */
+
+                var options = args[1] ? JSkeleton.Utils.stringToObject(args[1]) : {};
+
+                return i18next.t(args[0], options);
+
+            });
+        },
+
+        // translator
+        t: function(key, options) {
+            return i18next.t(key, options || {});
         }
 
     };
