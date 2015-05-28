@@ -20,7 +20,7 @@
     ],
     "dependencies": {
         "i18next": "~1.9.0",
-        "jskeleton": "https://github.com/bq/jskeleton-corbel.git"
+        "jskeleton": "https://github.com/bq/jskeleton.git"
     },
     "authors": [
         "front-end bq <front-end@bq.com>"
